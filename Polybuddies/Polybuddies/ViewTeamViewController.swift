@@ -7,15 +7,38 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Firebase
 
 class ViewTeamViewController: UIViewController {
-    
-    private var testTeam = {"Name": nil}
+
+    private var ref:FIRDatabaseReference?
+    /*private var _testTeamName: String = ""
+    var testTeamName: String {
+        get{
+            return _testTeamName
+        }
+        set{
+            if newValue != testTeamName{
+                _testTeamName = FIRDatabase.database().reference(withPath: "TeamOne/Name") as! String
+        }
+    }*/
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = FIRDatabase.database().reference()
+        // with is a callback
+        // snapshot refers to the data from the DB
+        // observe returns uid that references all the updates under TeamOne
+        ref?.child("TeamOne").observe(.childAdded, with: { (snapshot) in
+            // Code to execute when a child is added under "TemaOne"
+            let valueS = snapshot.value as? String
+            if let actualValueS = valueS{
+                print (actualValueS)
+            }
 
-        // Do any additional setup after loading the view.
+        })
+
     }
 
     override func didReceiveMemoryWarning() {

@@ -12,7 +12,10 @@ class PostTeamViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        /* Code snippet for adding stuff into DB
+        ref = FIRDatabase.database().reference(withPath: "TeamOne")
+        ref?.child("TeamTwo").child("Sport Type").setValue("Volleyball")
+        */
         // Do any additional setup after loading the view.
     }
 

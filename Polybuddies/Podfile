@@ -6,8 +6,7 @@ target 'Polybuddies' do
   use_frameworks!
 
   # Pods for Polybuddies
-  pod 'Firebase/Core'
-  pod 'SwiftyJSON'
+
   target 'PolybuddiesTests' do
     inherit! :search_paths
     # Pods for testing
@@ -18,4 +17,9 @@ target 'Polybuddies' do
     # Pods for testing
   end
 
+  pod 'Firebase'
+  pod 'Firebase/Core'
+  pod 'SwiftyJSON'
+  pod 'Firebase/Database'
+  pod 'FirebaseUI', '~> 1.0'
 end

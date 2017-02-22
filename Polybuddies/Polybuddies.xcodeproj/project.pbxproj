@@ -18,6 +18,7 @@
 		1CCDA3B71E5D567F001443E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CCDA3B61E5D567F001443E4 /* GoogleService-Info.plist */; };
 		1CCDA3B91E5D5D87001443E4 /* PostTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCDA3B81E5D5D87001443E4 /* PostTeamViewController.swift */; };
 		1CCDA3BB1E5D5D9C001443E4 /* ViewTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCDA3BA1E5D5D9C001443E4 /* ViewTeamViewController.swift */; };
+		1CCDA3BD1E5D61EF001443E4 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CCDA3BC1E5D61EF001443E4 /* SwiftyJSON.framework */; };
 		299A12CEC4D07BEB2BB5C3DA /* Pods_Polybuddies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF78DD69E9F2CD698C16762 /* Pods_Polybuddies.framework */; };
 		3390D661C619DA9E25086768 /* Pods_PolybuddiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C11CE28863CED82BBF5094 /* Pods_PolybuddiesTests.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		1CCDA3B61E5D567F001443E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1CCDA3B81E5D5D87001443E4 /* PostTeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTeamViewController.swift; sourceTree = "<group>"; };
 		1CCDA3BA1E5D5D9C001443E4 /* ViewTeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewTeamViewController.swift; sourceTree = "<group>"; };
+		1CCDA3BC1E5D61EF001443E4 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Polybuddies-fgapqqejzoobpyfyphmzsjoxxxsx/Build/Products/Debug-iphonesimulator/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		732A26A2E25138B08B9C6268 /* Pods-Polybuddies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Polybuddies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Polybuddies/Pods-Polybuddies.debug.xcconfig"; sourceTree = "<group>"; };
 		7BCB44F2B96CECE6911A4974 /* Pods-PolybuddiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PolybuddiesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PolybuddiesTests/Pods-PolybuddiesTests.release.xcconfig"; sourceTree = "<group>"; };
 		7CF78DD69E9F2CD698C16762 /* Pods_Polybuddies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Polybuddies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CCDA3BD1E5D61EF001443E4 /* SwiftyJSON.framework in Frameworks */,
 				299A12CEC4D07BEB2BB5C3DA /* Pods_Polybuddies.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,14 +124,14 @@
 			isa = PBXGroup;
 			children = (
 				1CCDA3881E5D5483001443E4 /* AppDelegate.swift */,
+				1CCDA3B81E5D5D87001443E4 /* PostTeamViewController.swift */,
+				1CCDA3BA1E5D5D9C001443E4 /* ViewTeamViewController.swift */,
 				1CCDA38A1E5D5483001443E4 /* ViewController.swift */,
 				1CCDA38C1E5D5484001443E4 /* Main.storyboard */,
 				1CCDA38F1E5D5484001443E4 /* Assets.xcassets */,
 				1CCDA3911E5D5484001443E4 /* LaunchScreen.storyboard */,
 				1CCDA3B61E5D567F001443E4 /* GoogleService-Info.plist */,
 				1CCDA3941E5D5484001443E4 /* Info.plist */,
-				1CCDA3B81E5D5D87001443E4 /* PostTeamViewController.swift */,
-				1CCDA3BA1E5D5D9C001443E4 /* ViewTeamViewController.swift */,
 			);
 			path = Polybuddies;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 		4A469FE4FABCFFF02725FA0E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1CCDA3BC1E5D61EF001443E4 /* SwiftyJSON.framework */,
 				7CF78DD69E9F2CD698C16762 /* Pods_Polybuddies.framework */,
 				D0C11CE28863CED82BBF5094 /* Pods_PolybuddiesTests.framework */,
 				DC3892257BDA9E71F4B81B97 /* Pods_PolybuddiesUITests.framework */,
