@@ -1,0 +1,6 @@
+framework module Pods_PolybuddiesUITests {
+  umbrella header "Pods-PolybuddiesUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
