@@ -7,16 +7,34 @@
 //
 
 import UIKit
+import Firebase
 
 class PostTeamViewController: UIViewController {
+    private var ref:FIRDatabaseReference?
+    
+    @IBOutlet weak var postName: UITextField!
+    @IBOutlet weak var postLevel: UITextField!
+    @IBOutlet weak var postSportType: UITextField!
+    
+
+    @IBAction func post(_ sender: Any) {
+        let name = postName.text!
+        if let ref = ref {
+            ref.child(name).child("Name").setValue(postName.text!)
+            ref.child(name).child("Skill Level").setValue(postLevel.text!)
+            ref.child(name).child("Sport Tpye").setValue(postSportType.text!)
+        }
+        else
+        {
+            print ("Error fetching data from DB")
+        }
+
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        /* Code snippet for adding stuff into DB
-        ref = FIRDatabase.database().reference(withPath: "TeamOne")
-        ref?.child("TeamTwo").child("Sport Type").setValue("Volleyball")
-        */
-        // Do any additional setup after loading the view.
+
+        ref = FIRDatabase.database().reference(withPath: "Teams")
     }
 
     override func didReceiveMemoryWarning() {

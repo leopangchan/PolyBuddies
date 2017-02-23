@@ -1,18 +1,10 @@
 # PolyBuddies
 
-PolyBuddies is a platform where students can form sport teams and find their sport
-buddies at Cal Poly.
+PostTeamPage:
+I put three text fields for the team's name, the skill level and the sport type. The data is sent by clicking "Confirm". In order to see whether it's successful, you can switch back to ViewTeam and check whether the new data is in the database.
 
-Most of the time, students cannot find buddies to work out or not have enough players to
-form a basketball or volleyball team to play a game. PolyBuddies can solve this issue. Unlike
-other Sport Buddy applications in the market, PolyBuddies strongly focuses on forming teams
-and finding suitable teammates at Cal Poly. It provides a platform where students can search
-their teammates based their interests and partner preferences, such as experience level,
-competitiveness, availabilities and the type of sport in Cal Poly. For occasional players, they will
-be able to see the population in the gym, basketball court and soccer field on Google Map so that
-they can decide the best time to the gym or the courts.
+ViewTeamPage:
+I plan to use tableViewController. I successfully fetch data from firebase so far. Entire database is output in the console when the user switch to the tableViewController.
 
-Furthermore, competitive students or athletics can schedule games with other teams
-through the platform. In the application, the existing teams are able to post their schedules on the
-application, and other teams can contact them based on their availabilities, experience levels, etc.
-
+Map:
+Ultimately, the pins' locations will be determined the data from firebase. I put two pins at soccer field and the recreational center for examples.
