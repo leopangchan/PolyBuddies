@@ -16,18 +16,40 @@ class TeamTableViewController: UITableViewController
     
     private var ref:FIRDatabaseReference?
     private var teams: NSDictionary?
+    private var allTeams: [Team]?
+    
+    private func fetchMemmbersInATeam(userIds: [Int]) -> [User]
+    {
+        var users: [User] = []
+        for (index, value) in userIds {
+            ref?.child("Users").observe(.childAdded, with: { (snapshot) in
+                let valueS = snapshot
+                users.append(valueS[value])// check if the value from the loop would work here
+            })
+        }
+        return users
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        /*
+         init(name: String, skillLevel: String, sportType: String, location: JSON,
+         teammembers: [User], availabilities:[JSON], phoneNumber: String)
+         */
 
         ref = FIRDatabase.database().reference()
 
         ref?.child("Teams").observe(.childAdded, with: { (snapshot) in
-            // Code to execute when a child is added under "TemaOne"
-            // team class
-            // Make a loop to store each field into the team objects
+            
             let valueS = snapshot
+            
+            let oneTeam = Team(name: valueS["Name"], skillLevel: valueS["Skill Level"], sportType: valueS["Sport Type"],
+                               location: ["longtitude": 123123.213, "latitude": 12312.55], teammembers: fetchMemmbersInATeam,
+                               availabilities: {}, phoneNumber: valueS["Phone Number"])
+            // 1. teammembers
+            // 2. availabilities
+            // 3. location
             print ("snapshot: ", valueS)
         })
     }

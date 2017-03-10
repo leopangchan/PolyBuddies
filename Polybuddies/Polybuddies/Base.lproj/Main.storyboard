@@ -12,7 +12,7 @@
         <!--Home-->
         <scene sceneID="TYG-85-7Xi">
             <objects>
-                <viewController title="Home" id="2Ia-cR-iZd" sceneMemberID="viewController">
+                <viewController title="Home" id="2Ia-cR-iZd" customClass="ViewController" customModule="Polybuddies" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rev-tU-t36"/>
                         <viewControllerLayoutGuide type="bottom" id="Dgo-mQ-da6"/>
@@ -21,34 +21,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eup-Q5-hlo">
-                                <rect key="frame" x="0.0" y="64" width="375" height="223"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Post a team"/>
-                                <connections>
-                                    <segue destination="V9c-YH-9hZ" kind="show" id="Up6-f1-k7D"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Owg-yH-R4E">
-                                <rect key="frame" x="0.0" y="498" width="375" height="169"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Map"/>
-                                <connections>
-                                    <segue destination="ENm-ad-d7v" kind="show" id="64O-1O-GBy"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAv-lp-GPs">
-                                <rect key="frame" x="0.0" y="295" width="375" height="195"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Show Teams"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAv-lp-GPs">
+                                <rect key="frame" x="0.0" y="285" width="375" height="223"/>
+                                <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Show Teams" backgroundImage="FindATeamHomePage">
+                                    <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <segue destination="4q5-l6-4Ks" kind="show" id="tPa-iB-8iM"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Owg-yH-R4E">
+                                <rect key="frame" x="0.0" y="498" width="375" height="223"/>
+                                <state key="normal" title="Map" backgroundImage="MapHomeImage"/>
+                                <connections>
+                                    <segue destination="ENm-ad-d7v" kind="show" id="64O-1O-GBy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eup-Q5-hlo">
+                                <rect key="frame" x="0.0" y="64" width="375" height="223"/>
+                                <state key="normal" title="Post a team" backgroundImage="PostATeam"/>
+                                <connections>
+                                    <segue destination="V9c-YH-9hZ" kind="show" id="Up6-f1-k7D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dAv-lp-GPs" firstAttribute="height" secondItem="Eup-Q5-hlo" secondAttribute="height" id="wb0-9F-Ly6"/>
+                            <constraint firstItem="dAv-lp-GPs" firstAttribute="height" secondItem="Owg-yH-R4E" secondAttribute="height" id="yrY-9O-FQz"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bbv-k6-qrp"/>
+                    <connections>
+                        <outlet property="postTeamBtn" destination="Eup-Q5-hlo" id="EV6-x4-2LI"/>
+                        <outlet property="seeTeamsBtnOnMa" destination="Owg-yH-R4E" id="VcH-bD-uth"/>
+                        <outlet property="showTeamButton" destination="dAv-lp-GPs" id="Rps-Y5-wbF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cgB-KU-I7y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -196,7 +205,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G9m-UX-eHq" id="LZe-tA-xtZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -212,4 +221,9 @@
             <point key="canvasLocation" x="1060" y="455"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="FindATeamHomePage" width="5616" height="3744"/>
+        <image name="MapHomeImage" width="1667" height="1667"/>
+        <image name="PostATeam" width="6000" height="4004"/>
+    </resources>
 </document>
