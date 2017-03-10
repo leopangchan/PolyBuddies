@@ -27,18 +27,8 @@ class TeamTableViewController: UITableViewController
             // Code to execute when a child is added under "TemaOne"
             // team class
             // Make a loop to store each field into the team objects
-            let valueS = snapshot.childSnapshot(forPath: "Name").value as? String
-            
-            if let actualValueS = valueS{
-                print (actualValueS)
-                //self.teams = actualValueS
-                //print(self.teams [""])
-            }
-            else
-            {
-                print("Error occurs during reading data from Firebase")
-            }
-            
+            let valueS = snapshot
+            print ("snapshot: ", valueS)
         })
     }
 
@@ -51,7 +41,7 @@ class TeamTableViewController: UITableViewController
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
