@@ -59,6 +59,30 @@ class Team
         }
     }
     
+    private var _latitude: Double?
+    var latitude: Double{
+        get{
+            return _latitude!
+        }
+        set{
+            if newValue != _latitude{
+                _latitude = newValue
+            }
+        }
+    }
+    
+    private var _longtitude: Double?
+    var longtitude: Double{
+        get{
+            return _longtitude!
+        }
+        set{
+            if newValue != _longtitude{
+                _longtitude = newValue
+            }
+        }
+    }
+    
     private var _teammembers: [User]?
     var teammembers: [User]{
         get{
@@ -69,8 +93,8 @@ class Team
         }
     }
     
-    private var _availabilities: [JSON]?// {startDate, endDate, startTime, endTime}
-    var availabilities: [JSON]{
+    private var _availabilities: [Availibility]?// {startDate, endDate, startTime, endTime}
+    var availabilities: [Availibility]{
         get{
             return _availabilities!
         }
@@ -89,11 +113,17 @@ class Team
         }
     }
     
-    init(name: String, skillLevel: String, sportType: String, location: JSON,
-        teammembers: [User], availabilities:[JSON], phoneNumber: String)
+    init(name: String, skillLevel: String, sportType: String, longtitude: Double, latitude: Double,
+        teammembers: [User], availabilities:[Availibility], phoneNumber: String)
     {
-        
-        
+        _name = name
+        _skillLevel = skillLevel
+        _sportType = sportType
+        _longtitude = longtitude
+        _latitude = latitude
+        _teammembers = teammembers
+        _availabilities = availabilities
+        _phoneNumber = phoneNumber
     }
 
 }

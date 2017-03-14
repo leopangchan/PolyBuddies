@@ -10,48 +10,88 @@ import UIKit
 import Firebase
 import SwiftyJSON
 
+class TeamTableCell: UITableViewCell
+{
+    var team: Team?
+}
 
 class TeamTableViewController: UITableViewController
 {
-    
-    private var ref:FIRDatabaseReference?
+    private var ref: FIRDatabaseReference?
     private var teams: NSDictionary?
-    private var allTeams: [Team]?
+    private var allTeams: [Team] = []
+    private var wrap: Wrappers?
     
-    private func fetchMemmbersInATeam(userIds: [Int]) -> [User]
+    /*
+     private func fetchMemmbersInATeam(userIds: NSArray) -> [User]
+     {
+     var users: [User] = []
+     for index in 0 ..< userIds.count
+     {
+     ref?.child("Users").child(String(describing: userIds[index])).observe(.childAdded, with: { (snapshot) in
+     if snapshot != nil
+     {
+     let valueS = snapshot.value as? NSDictionary
+     let oneUser = User(firstName: valueS?["First Name"] as! String,
+     lastName: valueS?["Last Name"] as! String,
+     phoneNumber: valueS?["Phone Number"] as! String,
+     sportType: valueS?["Sport Type"] as! String,
+     skillLevel: valueS?["Skill Level"] as! String)
+     users.append(oneUser)// check if the value from the loop would work here
+     }
+     })
+     }
+     
+     return users
+     }
+     */
+    
+    /*
+     sketcher.sketch(image: imageToSketch, completion: {(animation: SketchAnimation) -> Void in
+     // This is the callback.  It's a closure, passed as the argument to the sketch function's completion parameter
+     
+     // Ask the end-user if they'd like to view the completed animation now...
+     // You as a develoepr have access to the completed animation through the animation parameter to this closure
+     })
+     */
+    
+
+    
+    
+    @objc private func wrapperCB ()
     {
-        var users: [User] = []
-        for (index, value) in userIds {
-            ref?.child("Users").observe(.childAdded, with: { (snapshot) in
-                let valueS = snapshot
-                users.append(valueS[value])// check if the value from the loop would work here
-            })
-        }
-        return users
+        print ("teams:  ", allTeams)
+        self.tableView.reloadData()
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        /*
-         init(name: String, skillLevel: String, sportType: String, location: JSON,
-         teammembers: [User], availabilities:[JSON], phoneNumber: String)
-         */
 
+        self.tableView.estimatedRowHeight = 100.0;
+          self.tableView.rowHeight = UITableViewAutomaticDimension;
+        wrap = Wrappers()        
         ref = FIRDatabase.database().reference()
-
+        
         ref?.child("Teams").observe(.childAdded, with: { (snapshot) in
-            
-            let valueS = snapshot
-            
-            let oneTeam = Team(name: valueS["Name"], skillLevel: valueS["Skill Level"], sportType: valueS["Sport Type"],
-                               location: ["longtitude": 123123.213, "latitude": 12312.55], teammembers: fetchMemmbersInATeam,
-                               availabilities: {}, phoneNumber: valueS["Phone Number"])
-            // 1. teammembers
-            // 2. availabilities
-            // 3. location
-            print ("snapshot: ", valueS)
+            let valueS = snapshot.value as? NSDictionary
+            self.allTeams.append(Team(name: self.wrap!.strWrapper(field: "Name", valueS: valueS),
+                                      skillLevel: self.wrap!.strWrapper(field: "Skill Level", valueS: valueS),
+                                      sportType: self.wrap!.strWrapper(field: "Sport Type", valueS: valueS),
+                                      longtitude: self.wrap!.doubleWrapper(field: "longtitude", valueS: valueS),
+                                      latitude: self.wrap!.doubleWrapper(field: "latitude", valueS: valueS),
+                                      teammembers: self.wrap!.teamWrapper(ref: self.ref!, valueS: valueS),
+                                      availabilities: [Availibility(date: self.wrap!.strWrapper(field: "AvailableDates", valueS: valueS),
+                                                                    startTime: self.wrap!.strWrapper(field: "StartTime", valueS: valueS),
+                                                                    endTime: self.wrap!.strWrapper(field: "EndTime", valueS: valueS))],
+                                      phoneNumber: self.wrap!.strWrapper(field: "Phone Number", valueS: valueS)))
+            print("allTemas", self.allTeams)
         })
+        
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 2,
+            execute: {self.wrapperCB()})
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,11 +108,16 @@ class TeamTableViewController: UITableViewController
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return allTeams.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamTableCell
+        
+        let oneTeam = self.allTeams[indexPath.row]
+        cell.textLabel?.text = oneTeam.name
+        cell.detailTextLabel?.text = "Sport Type: " + oneTeam.sportType + "     Level: " + oneTeam.skillLevel + "       Phone Number: " + oneTeam.phoneNumber
+        cell.team = oneTeam
 
         return cell
     }

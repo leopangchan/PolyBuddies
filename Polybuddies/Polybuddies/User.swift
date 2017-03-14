@@ -10,14 +10,19 @@ import Foundation
 
 class User
 {
-    private var _name: String = ""
+    private var _firstName: String = ""
+    private var _lastName: String = ""
     private var _phoneNumber: String?
     private var _email: String = ""
     private var _sportType: String?
-    private var skillLevel: String?
+    private var _skillLevel: String?
     
-    init()
+    init(firstName: String, lastName: String, phoneNumber: String, sportType: String, skillLevel: String)
     {
-        
+        _firstName = firstName
+        _lastName = lastName
+        _phoneNumber = phoneNumber
+        _sportType = sportType
+        _skillLevel = skillLevel
     }
 }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1B546B37DD9EAB038B06BF6C /* Pods_PolybuddiesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3892257BDA9E71F4B81B97 /* Pods_PolybuddiesUITests.framework */; };
+		1C472EDB1E77666C0043C5F3 /* Availibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C472EDA1E77666C0043C5F3 /* Availibility.swift */; };
+		1C472EDD1E77AE030043C5F3 /* Wrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C472EDC1E77AE030043C5F3 /* Wrappers.swift */; };
 		1CAD080D1E5E3A1500E6E429 /* TeamTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD080C1E5E3A1500E6E429 /* TeamTableViewController.swift */; };
 		1CAD080F1E5E84A600E6E429 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD080E1E5E84A600E6E429 /* MapViewController.swift */; };
 		1CCDA3891E5D5483001443E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCDA3881E5D5483001443E4 /* AppDelegate.swift */; };
@@ -45,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C472EDA1E77666C0043C5F3 /* Availibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Availibility.swift; sourceTree = "<group>"; };
+		1C472EDC1E77AE030043C5F3 /* Wrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wrappers.swift; sourceTree = "<group>"; };
 		1CAD080C1E5E3A1500E6E429 /* TeamTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamTableViewController.swift; sourceTree = "<group>"; };
 		1CAD080E1E5E84A600E6E429 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1CCDA3851E5D5483001443E4 /* Polybuddies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Polybuddies.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +148,8 @@
 				1CAD080E1E5E84A600E6E429 /* MapViewController.swift */,
 				1CF2DC301E5F82FB002B43E6 /* Team.swift */,
 				1CFCA64A1E6E962B002FE471 /* User.swift */,
+				1C472EDA1E77666C0043C5F3 /* Availibility.swift */,
+				1C472EDC1E77AE030043C5F3 /* Wrappers.swift */,
 			);
 			path = Polybuddies;
 			sourceTree = "<group>";
@@ -474,6 +480,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CF2DC311E5F82FB002B43E6 /* Team.swift in Sources */,
+				1C472EDD1E77AE030043C5F3 /* Wrappers.swift in Sources */,
+				1C472EDB1E77666C0043C5F3 /* Availibility.swift in Sources */,
 				1CAD080D1E5E3A1500E6E429 /* TeamTableViewController.swift in Sources */,
 				1CCDA3B91E5D5D87001443E4 /* PostTeamViewController.swift in Sources */,
 				1CCDA38B1E5D5483001443E4 /* ViewController.swift in Sources */,
