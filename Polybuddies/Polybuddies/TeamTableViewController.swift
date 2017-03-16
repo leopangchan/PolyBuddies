@@ -13,6 +13,11 @@ import SwiftyJSON
 class TeamTableCell: UITableViewCell
 {
     var team: Team?
+    
+    @IBOutlet weak var skillLevelView: UITextView!
+    @IBOutlet weak var phoneNumberView: UITextView!
+    @IBOutlet weak var teammembersView: UITextView!
+    @IBOutlet weak var sportTypeView: UITextView!
 }
 
 class TeamTableViewController: UITableViewController
@@ -55,7 +60,10 @@ class TeamTableViewController: UITableViewController
      })
      */
     
-
+    @IBAction func unwindToTeamTableView(for unwindSegue: UIStoryboardSegue)
+    {
+        print("HI")
+    }
     
     
     @objc private func wrapperCB ()
@@ -64,14 +72,9 @@ class TeamTableViewController: UITableViewController
         self.tableView.reloadData()
     }
     
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-
-        self.tableView.estimatedRowHeight = 100.0;
-          self.tableView.rowHeight = UITableViewAutomaticDimension;
-        wrap = Wrappers()        
-        ref = FIRDatabase.database().reference()
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.estimatedRowHeight = 100
+        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         ref?.child("Teams").observe(.childAdded, with: { (snapshot) in
             let valueS = snapshot.value as? NSDictionary
@@ -85,13 +88,26 @@ class TeamTableViewController: UITableViewController
                                                                     startTime: self.wrap!.strWrapper(field: "StartTime", valueS: valueS),
                                                                     endTime: self.wrap!.strWrapper(field: "EndTime", valueS: valueS))],
                                       phoneNumber: self.wrap!.strWrapper(field: "Phone Number", valueS: valueS)))
-            print("allTemas", self.allTeams)
         })
+    }
+    
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+
+        wrap = Wrappers()        
+        ref = FIRDatabase.database().reference()
         
+        let bgImage = UIImage(named: "SoccerFieldImage");
+        let imageView = UIImageView(frame: self.view.bounds);
+        imageView.image = bgImage
+        self.view.addSubview(imageView)
+        self.view.sendSubview(toBack: imageView)
+
         DispatchQueue.main.asyncAfter(
-            deadline: .now() + 2,
+            deadline: .now() + 1,
             execute: {self.wrapperCB()})
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,10 +129,14 @@ class TeamTableViewController: UITableViewController
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamTableCell
-        
         let oneTeam = self.allTeams[indexPath.row]
+        
+        cell.contentView.layer.opacity = 1.8;
         cell.textLabel?.text = oneTeam.name
-        cell.detailTextLabel?.text = "Sport Type: " + oneTeam.sportType + "     Level: " + oneTeam.skillLevel + "       Phone Number: " + oneTeam.phoneNumber
+        cell.skillLevelView?.text = oneTeam.sportType
+        cell.phoneNumberView?.text = oneTeam.phoneNumber
+        cell.sportTypeView?.text = oneTeam.sportType
+        cell.skillLevelView?.text = oneTeam.skillLevel
         cell.team = oneTeam
 
         return cell
