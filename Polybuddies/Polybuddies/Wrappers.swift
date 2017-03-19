@@ -52,7 +52,8 @@ class Wrappers {
                                        lastName: self.strWrapper(field: "Last Name", valueS: valueS),
                                        phoneNumber: self.strWrapper(field: "Phone Number", valueS: valueS),
                                        sportType: self.strWrapper(field: "Sport Type", valueS: valueS),
-                                       skillLevel: self.strWrapper(field: "Skill Level", valueS: valueS))
+                                       skillLevel: self.strWrapper(field: "Skill Level", valueS: valueS),
+                                       email: self.strWrapper(field: "Email", valueS: valueS))
                     users.append(oneUser)// check if the value from the loop would work here
                     print ("appending: ", users)
                 }
@@ -75,12 +76,12 @@ class Wrappers {
             }
             else
             {
-                nsDR = [User(firstName: "N/A", lastName: "N/A", phoneNumber: "N/A", sportType: "N/A", skillLevel: "N/A")]
+                nsDR = [User(firstName: "N/A", lastName: "N/A", phoneNumber: "N/A", sportType: "N/A", skillLevel: "N/A", email: "N/A")]
             }
         }
         else
         {
-            nsDR = [User(firstName: "DB Error", lastName: "N/A", phoneNumber: "N/A", sportType: "N/A", skillLevel: "N/A")]
+            nsDR = [User(firstName: "DB Error", lastName: "N/A", phoneNumber: "N/A", sportType: "N/A", skillLevel: "N/A", email: "N/A")]
         }
         
         return nsDR!

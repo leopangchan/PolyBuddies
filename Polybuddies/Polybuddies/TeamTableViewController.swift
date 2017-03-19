@@ -13,11 +13,31 @@ import SwiftyJSON
 class TeamTableCell: UITableViewCell
 {
     var team: Team?
-    
-    @IBOutlet weak var skillLevelView: UITextView!
+
+    @IBOutlet weak var teamNameView: UITextView!
+    @IBOutlet weak var teammemberView: UITextView!
     @IBOutlet weak var phoneNumberView: UITextView!
-    @IBOutlet weak var teammembersView: UITextView!
+    @IBOutlet weak var skillLevelView: UITextView!
     @IBOutlet weak var sportTypeView: UITextView!
+    @IBOutlet weak var addPersonBtn: UIButton!
+    
+    public func initViewStyle()
+    {
+        let textViewBackgroundColor = UIColor(white: 1, alpha: 0.3)
+        self.layer.backgroundColor = UIColor.clear.cgColor
+        teamNameView?.backgroundColor = textViewBackgroundColor
+        teammemberView?.backgroundColor = textViewBackgroundColor
+        phoneNumberView?.backgroundColor = textViewBackgroundColor
+        skillLevelView?.backgroundColor = textViewBackgroundColor
+        sportTypeView?.backgroundColor = textViewBackgroundColor
+        
+        teamNameView?.isEditable = false
+        teammemberView?.isEditable = false
+        phoneNumberView?.isEditable = false
+        skillLevelView?.isEditable = false
+        sportTypeView?.isEditable = false
+    }
+
 }
 
 class TeamTableViewController: UITableViewController
@@ -65,7 +85,6 @@ class TeamTableViewController: UITableViewController
         print("HI")
     }
     
-    
     @objc private func wrapperCB ()
     {
         print ("teams:  ", allTeams)
@@ -73,8 +92,6 @@ class TeamTableViewController: UITableViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.estimatedRowHeight = 100
-        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         ref?.child("Teams").observe(.childAdded, with: { (snapshot) in
             let valueS = snapshot.value as? NSDictionary
@@ -96,7 +113,10 @@ class TeamTableViewController: UITableViewController
     {
         super.viewDidLoad()
 
-        wrap = Wrappers()        
+        self.tableView.estimatedRowHeight = 300
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        wrap = Wrappers()
         ref = FIRDatabase.database().reference()
         
         let bgImage = UIImage(named: "SoccerFieldImage");
@@ -126,20 +146,34 @@ class TeamTableViewController: UITableViewController
         // #warning Incomplete implementation, return the number of rows
         return allTeams.count
     }
+    
+    @objc private func performSegueSelector()
+    {
+        performSegue(withIdentifier: "ListingToAddUser", sender: self)
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamTableCell
         let oneTeam = self.allTeams[indexPath.row]
-        
+        //action: #selector(TableViewController.buttonTapped(_:))
+
+        cell.addPersonBtn.addTarget(self, action: #selector(TeamTableViewController.performSegueSelector), for: .touchUpInside)
         cell.contentView.layer.opacity = 1.8;
-        cell.textLabel?.text = oneTeam.name
+        cell.teamNameView?.text = oneTeam.name
         cell.skillLevelView?.text = oneTeam.sportType
         cell.phoneNumberView?.text = oneTeam.phoneNumber
         cell.sportTypeView?.text = oneTeam.sportType
         cell.skillLevelView?.text = oneTeam.skillLevel
+        cell.initViewStyle();
         cell.team = oneTeam
 
         return cell
+    }
+    
+    // Resize height to fit the customized cells
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+
+        return CGFloat(200.0)
     }
 
     /*
@@ -177,14 +211,21 @@ class TeamTableViewController: UITableViewController
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "ListingToAddUser"
+        {
+            if segue.destination is AddUserViewController
+            {
+                if (sender as? TeamTableCell) != nil
+                {
+                    print("In TeamTable")
+                }
+            }
+        }
     }
-    */
-
 }
