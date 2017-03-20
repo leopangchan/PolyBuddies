@@ -276,11 +276,4 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         return CGFloat(140.0)
     }
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        // segue to show table view
-    }
-
 }

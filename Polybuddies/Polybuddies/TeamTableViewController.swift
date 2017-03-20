@@ -42,58 +42,21 @@ class TeamTableViewController: UITableViewController
     private var ref: FIRDatabaseReference?
     private var teams: NSDictionary?
     private var allTeams: [Team] = []
+    {
+        didSet
+        {
+            self.tableView.reloadData()
+        }
+    }
     private var wrap: Wrappers?
     
-    /*
-     private func fetchMemmbersInATeam(userIds: NSArray) -> [User]
-     {
-     var users: [User] = []
-     for index in 0 ..< userIds.count
-     {
-     ref?.child("Users").child(String(describing: userIds[index])).observe(.childAdded, with: { (snapshot) in
-     if snapshot != nil
-     {
-     let valueS = snapshot.value as? NSDictionary
-     let oneUser = User(firstName: valueS?["First Name"] as! String,
-     lastName: valueS?["Last Name"] as! String,
-     phoneNumber: valueS?["Phone Number"] as! String,
-     sportType: valueS?["Sport Type"] as! String,
-     skillLevel: valueS?["Skill Level"] as! String)
-     users.append(oneUser)// check if the value from the loop would work here
-     }
-     })
-     }
-     
-     return users
-     }
-     */
-    
-    /*
-     sketcher.sketch(image: imageToSketch, completion: {(animation: SketchAnimation) -> Void in
-     // This is the callback.  It's a closure, passed as the argument to the sketch function's completion parameter
-     
-     // Ask the end-user if they'd like to view the completed animation now...
-     // You as a develoepr have access to the completed animation through the animation parameter to this closure
-     })
-     */
-    
-    @IBAction func unwindToTeamTableView(for unwindSegue: UIStoryboardSegue)
+    override func viewWillAppear(_ animated: Bool)
     {
-        print("HI")
-    }
-    
-    @objc private func wrapperCB ()
-    {
-        self.tableView.reloadData()
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
+        wrap = Wrappers()
         self.allTeams = []
+        
         ref?.child("Teams").observe(.childAdded, with: { (snapshot) in
             let valueS = snapshot.value as? NSDictionary
-            print ("PRINT ONE TEAM ", valueS)
             self.allTeams.append(Team(name: self.wrap!.strWrapper(field: "Name", valueS: valueS),
                                       skillLevel: self.wrap!.strWrapper(field: "Skill Level", valueS: valueS),
                                       sportType: self.wrap!.strWrapper(field: "Sport Type", valueS: valueS),
@@ -104,6 +67,8 @@ class TeamTableViewController: UITableViewController
                                       startTime: self.wrap!.strWrapper(field: "StartTime", valueS: valueS),
                                       phoneNumber: self.wrap!.strWrapper(field: "Phone Number", valueS: valueS)))
         })
+        
+        self.tableView.reloadData();
     }
     
     
@@ -111,26 +76,14 @@ class TeamTableViewController: UITableViewController
     {
         super.viewDidLoad()
 
+        let bgImage = UIImage(named: "SoccerFieldImage");
+        
         self.tableView.estimatedRowHeight = 300
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        wrap = Wrappers()
         ref = FIRDatabase.database().reference()
         
-        //let bgImage = UIImage(named: "SoccerFieldImage");
-        //let imageView = UIImageView(frame: self.view.bounds);
-        //imageView.image = bgImage
-        //self.view.addSubview(imageView)
-        //self.view.sendSubview(toBack: imageView)
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "SoccerFieldImage")
-        self.view.insertSubview(backgroundImage, at: 0)
-        
-        //solution: but too dark self.tableView.backgroundColor = UIColor(patternImage: bgImage!)
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 1,
-            execute: {self.wrapperCB()})
+        self.tableView.backgroundColor = UIColor(patternImage: bgImage!)
     }
 
     override func didReceiveMemoryWarning()
@@ -170,7 +123,7 @@ class TeamTableViewController: UITableViewController
         cell.sportTypeView?.text = oneTeam.sportType
         cell.skillLevelView?.text = oneTeam.skillLevel
         cell.initViewStyle();
-        print ("oneTeam  ", oneTeam.teammembers)
+
         cell.team = oneTeam
 
         return cell
@@ -182,41 +135,6 @@ class TeamTableViewController: UITableViewController
         return CGFloat(155.0)
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -226,11 +144,9 @@ class TeamTableViewController: UITableViewController
         {
             if let dest = segue.destination as? TeamDetailViewController
             {
-                                    print ("SEGUE team ")
                 if let sndr = sender as? TeamTableCell
                 {
                     dest.team = sndr.team
-                    print ("SEGUE team ", sndr.team)
                 }
             }
         }

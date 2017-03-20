@@ -66,7 +66,7 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     if (oneUser.firstName != "DB Error")
                     {
                         oneUser.prsID = value
-                        self.ppl.append(oneUser)// check if the value from the loop would work here
+                        self.ppl.append(oneUser)
                     }
                 })
             }
@@ -156,13 +156,13 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         teammemberTableView.setEditing(editing, animated: animated)
     }
     
-    private func getPrsKey(teammembers : Any, deleting: String) -> String
+    private func getPrsKey(teammembers : [String], deleting: String) -> String
     {
         print ("teammembers ", teammembers)
-        for(index, val) in (teammembers as! [Any]).enumerated()
+        for(index, val) in teammembers.enumerated()
         {
             print ("val ", val)
-            if(val as! String == deleting)
+            if(val == deleting)
             {
                 print ("KEY", val)
                 return String(index)
@@ -177,28 +177,16 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         if editingStyle == .delete
         {
             let deletingID = ppl[indexPath.row].prsID
-            let teammembers : Any
             
-            ref?.child("Teams").child((team?.name)!).observe(.value, with: { (snapshot) in
-                teammembers = snapshot["Teammember"]
-            
-            })
-            
-            let key = getPrsKey(teammembers: teammembers!, deleting: String(deletingID))
-            
+            let key = getPrsKey(teammembers: (team?.teammembers)!, deleting: String(deletingID))
+            print ("KEY: ", key)
             ref?.child("Teams").child((team?.name)!).child("Teammember").child(key).removeValue()
             ppl.remove(at: indexPath.row)
             //teammemberTableView.deleteRows(at: [indexPath], with: .fade)
         }
-        else if editingStyle == .insert
-        {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
     }
 
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if segue.identifier == "DetailToAddPerson"
