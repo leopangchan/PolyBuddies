@@ -28,6 +28,10 @@ class MapViewController: UIViewController
     let SLO = CLLocationCoordinate2DMake(35.3050053, -120.66249419999997)
     let recCnter = CLLocationCoordinate2DMake(35.29849859999999, -120.6599076)
     let soccerField = CLLocationCoordinate2DMake(35.31062521662127, -120.67212224006653)
+    let baggettStadium = CLLocationCoordinate2DMake(35.3069122, -120.6651058)
+    let bobJanssenField = CLLocationCoordinate2DMake(35.3071321, -120.6665435)
+    let dexterlawn = CLLocationCoordinate2DMake(35.300591, -120.663121)
+    let theP = CLLocationCoordinate2DMake(35.3028183, -120.651662)
     
     override func viewDidLoad()
     {

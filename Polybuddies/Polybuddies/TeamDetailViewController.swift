@@ -24,6 +24,12 @@ class PersonTableCell: UITableViewCell
         sportTypeView.isEditable = false
         phoneNumberView.isEditable = false
         skillLevelView.isEditable = false
+        
+        emailView.layer.cornerRadius = 5
+        nameView.layer.cornerRadius = 5
+        sportTypeView.layer.cornerRadius = 5
+        phoneNumberView.layer.cornerRadius = 5
+        skillLevelView.layer.cornerRadius = 5
     }
 }
 

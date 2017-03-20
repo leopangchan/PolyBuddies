@@ -36,15 +36,19 @@ class PostTeamViewController: UIViewController {
 
         nameLabel.layer.borderColor = borderColor
         nameLabel.layer.borderWidth = 1.0
+        nameLabel.layer.cornerRadius = 5.0
         
         sportTypeLabel.layer.borderColor = borderColor
         sportTypeLabel.layer.borderWidth = 1.0
+        sportTypeLabel.layer.cornerRadius = 5.0
         
         levelLabel.layer.borderColor = borderColor
         levelLabel.layer.borderWidth = 1.0
+        sportTypeLabel.layer.cornerRadius = 5.0
         
         phoneNoLabel.layer.borderColor = borderColor
         phoneNoLabel.layer.borderWidth = 1.0
+        sportTypeLabel.layer.cornerRadius = 5.0
     }
     
     @IBAction func post(_ sender: Any)

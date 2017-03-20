@@ -29,6 +29,11 @@ class TeamTableCell: UITableViewCell
         skillLevelView?.backgroundColor = textViewBackgroundColor
         sportTypeView?.backgroundColor = textViewBackgroundColor
         
+        teamNameView?.layer.cornerRadius = 5
+        phoneNumberView?.layer.cornerRadius = 5
+        skillLevelView?.layer.cornerRadius = 5
+        sportTypeView?.layer.cornerRadius = 5
+        
         teamNameView?.isEditable = false
         phoneNumberView?.isEditable = false
         skillLevelView?.isEditable = false
