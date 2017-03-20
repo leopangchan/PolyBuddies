@@ -50,6 +50,7 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     public var onlyDate : String = ""
     public var onlyStartTime : String = ""
     public var beingAddedUser : [String] = []// The keys being added in Teams in DB
+    public var location: String = ""
     
     private let dateFormatter = DateFormatter()
 
@@ -96,7 +97,8 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
                                         "Phone Number": phoneNumber!,
                                         "AvailableDates": onlyDate,
                                         "StartTime": onlyStartTime,
-                                        "Teammember": beingAddedUser])
+                                        "Teammember": beingAddedUser,
+                                        "Location": location])
                 
                 performSegue(withIdentifier: "AddUserToListing", sender: sender)
             }

@@ -70,8 +70,8 @@ class TeamTableViewController: UITableViewController
                                       teammembers: self.wrap!.teamWrapper(valueS: valueS),
                                       date: self.wrap!.strWrapper(field: "AvailableDates", valueS: valueS),
                                       startTime: self.wrap!.strWrapper(field: "StartTime", valueS: valueS),
-                                      phoneNumber: self.wrap!.strWrapper(field: "Phone Number", valueS: valueS)))
-        })
+                                      phoneNumber: self.wrap!.strWrapper(field: "Phone Number", valueS: valueS),
+                                      location: self.wrap!.strWrapper(field: "Location", valueS: valueS)))})
         
         self.tableView.reloadData();
     }

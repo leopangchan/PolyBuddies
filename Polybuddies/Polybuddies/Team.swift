@@ -46,18 +46,6 @@ class Team
             }
         }
     }
-
-    private var _location: JSON?// {latitude, longitude}
-    var location: JSON{
-        get{
-            return _location!
-        }
-        set{
-            if newValue != location{
-                _location = newValue
-            }
-        }
-    }
     
     private var _latitude: Double?
     var latitude: Double{
@@ -123,8 +111,18 @@ class Team
         }
     }
     
+    private var _location: String?
+    var location: String{
+        get{
+            return _location!
+        }
+        set{
+            _location = newValue
+        }
+    }
+    
     init(name: String, skillLevel: String, sportType: String, longtitude: Double, latitude: Double,
-         teammembers: [String], date: String, startTime: String, phoneNumber: String)
+         teammembers: [String], date: String, startTime: String, phoneNumber: String, location: String)
     {
         _name = name
         _skillLevel = skillLevel
@@ -135,6 +133,6 @@ class Team
         _date = date
         _startTime = startTime
         _phoneNumber = phoneNumber
+        _location = location
     }
-
 }

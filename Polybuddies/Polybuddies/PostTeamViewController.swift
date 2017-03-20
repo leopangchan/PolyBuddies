@@ -9,15 +9,20 @@
 import UIKit
 
 
-class PostTeamViewController: UIViewController {
+class PostTeamViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate
+{
     
     private let alert = UIAlertController(title: "Yo!", message: "Please enter your all the fields.", preferredStyle: UIAlertControllerStyle.alert)
+    private let locationArray = ["Rec Center", "Soccer Field", "Bagger Stadium", "Bob Janssen Field", "Dexter Lawn", "The P", "Other"]
+    private var selectedLocation: String = "N/A"
 
     @IBOutlet weak var postName: UITextField!
     @IBOutlet weak var postLevel: UITextField!
     @IBOutlet weak var postSportType: UITextField!
     @IBOutlet weak var postPhoneNumber: UITextField!
     @IBOutlet weak var postDate: UIDatePicker!
+    
+    @IBOutlet weak var locationPickerView: UIPickerView!
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var sportTypeLabel: UILabel!
@@ -35,20 +40,24 @@ class PostTeamViewController: UIViewController {
         postPhoneNumber?.backgroundColor = textViewBackgroundColor
 
         nameLabel.layer.borderColor = borderColor
-        nameLabel.layer.borderWidth = 1.0
+        nameLabel.layer.borderWidth = 3.0
         nameLabel.layer.cornerRadius = 5.0
+        nameLabel.textAlignment = NSTextAlignment.center
         
         sportTypeLabel.layer.borderColor = borderColor
-        sportTypeLabel.layer.borderWidth = 1.0
+        sportTypeLabel.layer.borderWidth = 3.0
         sportTypeLabel.layer.cornerRadius = 5.0
+        sportTypeLabel.textAlignment = NSTextAlignment.center
         
         levelLabel.layer.borderColor = borderColor
-        levelLabel.layer.borderWidth = 1.0
-        sportTypeLabel.layer.cornerRadius = 5.0
+        levelLabel.layer.borderWidth = 3.0
+        levelLabel.layer.cornerRadius = 5.0
+        levelLabel.textAlignment = NSTextAlignment.center
         
         phoneNoLabel.layer.borderColor = borderColor
-        phoneNoLabel.layer.borderWidth = 1.0
-        sportTypeLabel.layer.cornerRadius = 5.0
+        phoneNoLabel.layer.borderWidth = 3.0
+        phoneNoLabel.layer.cornerRadius = 5.0
+        phoneNoLabel.textAlignment = NSTextAlignment.center
     }
     
     @IBAction func post(_ sender: Any)
@@ -76,12 +85,36 @@ class PostTeamViewController: UIViewController {
         self.initTextAndLabelView()
         alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         imageView.image = bgImage
-
+        
+        locationPickerView.delegate = self
+        locationPickerView.dataSource = self
     }
-
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
+    }
+    
+    
+    // MARK: - PickerView
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    {
+        return locationArray[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    {
+        return locationArray.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int
+    {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+       selectedLocation = locationArray[row]
     }
     
     // MARK: - Navigation
@@ -102,7 +135,7 @@ class PostTeamViewController: UIViewController {
                     dest.sportType = postSportType?.text
                     dest.phoneNumber = postPhoneNumber?.text
                     dest.date = (postDate?.date)!
-                    
+                    dest.location = selectedLocation
                     print("Segue:  ", dest.name!)
                 }
             }

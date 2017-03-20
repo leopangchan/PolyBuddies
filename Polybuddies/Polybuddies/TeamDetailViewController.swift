@@ -88,6 +88,11 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         phoneNumberView.backgroundColor = textViewBackgroundColor
         sportTypeView.backgroundColor = textViewBackgroundColor
         
+        nameView.layer.cornerRadius = 5
+        phoneNumberView.layer.cornerRadius = 5
+        skillLevelView.layer.cornerRadius = 5
+        sportTypeView.layer.cornerRadius = 5
+        
         nameView?.text = team.name
         skillLevelView?.text = team.skillLevel
         phoneNumberView?.text = team.phoneNumber
@@ -164,13 +169,10 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     private func getPrsKey(teammembers : [String], deleting: String) -> String
     {
-        print ("teammembers ", teammembers)
         for(index, val) in teammembers.enumerated()
         {
-            print ("val ", val)
             if(val == deleting)
             {
-                print ("KEY", val)
                 return String(index)
             }
         }
@@ -185,7 +187,6 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let deletingID = ppl[indexPath.row].prsID
             
             let key = getPrsKey(teammembers: (team?.teammembers)!, deleting: String(deletingID))
-            print ("KEY: ", key)
             ref?.child("Teams").child((team?.name)!).child("Teammember").child(key).removeValue()
             ppl.remove(at: indexPath.row)
             //teammemberTableView.deleteRows(at: [indexPath], with: .fade)
@@ -208,7 +209,6 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     dest.onlyStartTime = (team?.startTime)!
                     dest.onlyDate = (team?.date)!
                     dest.ppl = self.ppl
-                    //print ("SEgue ppl ", self.ppl)
                     dest.beingAddedUser = (self.team?.teammembers)!
                 }
             }
