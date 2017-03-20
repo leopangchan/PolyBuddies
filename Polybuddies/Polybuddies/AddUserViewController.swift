@@ -8,9 +8,11 @@
 
 import UIKit
 import Firebase
+import SwiftyJSON
 
 class PersonCell: UITableViewCell
 {
+    public var prsID: String?
     
     @IBOutlet weak var emailCell: UITextView!
     @IBOutlet weak var skillLevelCell: UITextView!
@@ -32,15 +34,18 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
 {
     private var ref: FIRDatabaseReference?
     private var userRef: FIRDatabaseReference?
+    
+    // All fields are initialized by Segue:
     public var name: String?
     public var level: String?
     public var sportType: String?
     public var phoneNumber: String?
     public var date: Date?
+    public var onlyDate : String = ""
+    public var onlyStartTime : String = ""
+    public var beingAddedUser : [String] = []// The keys being added in Teams in DB
+    
     private let dateFormatter = DateFormatter()
-    private var onlyDate : String = ""
-    private var onlyStartTime : String = ""
-    private var beingAddedUser : [Int] = []
 
     @IBOutlet weak var pplTableView: UITableView!
     @IBOutlet weak var skillLevelField: UITextField!
@@ -49,10 +54,10 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var phoneNumberField: UITextField!
     @IBOutlet weak var lastNameField: UITextField!
     @IBOutlet weak var firstNameField: UITextField!
+    
     private var alert : UIAlertController = UIAlertController(title: "Yo!", message: "Please enter your first name and email.", preferredStyle: UIAlertControllerStyle.alert)
     private var dupAlert : UIAlertController = UIAlertController(title: "Yo!", message: "This person is already in the team", preferredStyle: UIAlertControllerStyle.alert)
-    
-    private var ppl : [User] = []
+    public var ppl : [User] = []// The ppl being displayed in the TableView
     public var aPerson : User?
         {
         didSet
@@ -72,16 +77,22 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             let pn = name!
             if pn != ""
             {
-                let formattedDateArray = dateFormatter.string(from: date!).components(separatedBy: " ")
-                ref.child(pn).child("Name").setValue(pn)
-                ref.child(pn).child("Skill Level").setValue(level!)
-                ref.child(pn).child("Sport Type").setValue(sportType)
-                ref.child(pn).child("Phone Number").setValue(phoneNumber)
-                onlyDate = formattedDateArray[0]
-                onlyStartTime = formattedDateArray[1]
-                ref.child(pn).child("AvailableDates").setValue(onlyDate)
-                ref.child(pn).child("StartTime").setValue(onlyStartTime)
-                //ref.child(pn).child("Teammember").push({})
+                if onlyDate == "" && onlyStartTime == ""
+                {
+                    let formattedDateArray = dateFormatter.string(from: date!).components(separatedBy: " ")
+                    onlyDate = formattedDateArray[0]
+                    onlyStartTime = formattedDateArray[1]
+                }
+                
+                ref.child(pn).setValue(["Name": pn,
+                                        "Skill Level": level!,
+                                        "Sport Type": sportType!,
+                                        "Phone Number": phoneNumber!,
+                                        "AvailableDates": onlyDate,
+                                        "StartTime": onlyStartTime,
+                                        "Teammember": beingAddedUser])
+                
+                performSegue(withIdentifier: "AddUserToListing", sender: sender)
             }
             else
             {
@@ -118,12 +129,14 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         firstNameField.layer.borderWidth = 0
     }
     
+    // Add a Person to the tableView
     @IBAction func addPsr(_ sender: Any)
     {
         if (firstNameField!.text != "" || emailField!.text != "")
         {
             
-            if(hasDuplicate(users: ppl, inputFirstName: firstNameField.text!, inputLastName: lastNameField.text!))
+            if(hasDuplicate(users: ppl, inputFirstName: firstNameField.text!,
+                            inputLastName: lastNameField.text!))
             {
                 self.present(dupAlert, animated: true, completion: nil)
             }
@@ -150,14 +163,23 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     }
     
+    // A helper that post a Person to Users in DB
     private func addPrsToDB(usr : User)
     {
         if let userRef = userRef
         {
-            userRef.setValue(usr)
+            let key: String = userRef.childByAutoId().key
+            userRef.child(key).setValue(["Email": usr.email,
+                                         "First Name": usr.firstName,
+                                         "Last Name": usr.lastName,
+                                         "Skill Level": usr.skillLevel,
+                                         "Sport Type": usr.sportType,])
+            usr.prsID = key
+            beingAddedUser.append(key)
         }
     }
-    
+
+    // Check if a person is already in a team
     private func hasDuplicate(users : [User], inputFirstName: String, inputLastName: String) -> Bool
     {
         for ( _, value) in users.enumerated()
@@ -171,22 +193,9 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         return false
     }
     
-    override func viewDidLoad()
+    private func initTextFields ()
     {
-        super.viewDidLoad()
-        
-        let bgImage = UIImage(named: "SoccerFieldImage");
-        let imageView = UIImageView(frame: self.view.bounds);
         let textViewBackgroundColor = UIColor(white: 1, alpha: 0.3)
-
-        imageView.image = bgImage
-        self.view.addSubview(imageView)
-        self.view.sendSubview(toBack: imageView)
-        self.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss +ZZZZZ"
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-        
-        pplTableView.dataSource = self
-        pplTableView.delegate = self
         
         skillLevelField?.backgroundColor = textViewBackgroundColor
         sportTypeField?.backgroundColor = textViewBackgroundColor
@@ -194,11 +203,48 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         phoneNumberField?.backgroundColor = textViewBackgroundColor
         lastNameField?.backgroundColor = textViewBackgroundColor
         firstNameField?.backgroundColor = textViewBackgroundColor
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        pplTableView.dataSource = self
+        pplTableView.delegate = self
+        
+        let bgImage = UIImage(named: "SoccerFieldImage");
+        let imageView = UIImageView(frame: self.view.bounds);
+        imageView.image = bgImage
+        self.view.addSubview(imageView)
+        self.view.sendSubview(toBack: imageView)
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss +ZZZZZ"
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        
+        self.initTextFields()
         ref = FIRDatabase.database().reference(withPath: "Teams")
         userRef = FIRDatabase.database().reference(withPath: "Users")
     }
-
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        pplTableView.setEditing(editing, animated: animated)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete
+        {
+            // Delete the row from the data source
+            userRef?.child(ppl[indexPath.row].prsID).removeValue();
+            ppl.remove(at: (indexPath as NSIndexPath).row)
+            pplTableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        else if editingStyle == .insert
+        {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -207,7 +253,7 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return ppl.count
+        return self.ppl.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -216,9 +262,9 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         let onePerson = ppl[indexPath.row]
         
         cell?.initCells()
-        cell?.contentView.layer.opacity = 1.8;
         cell?.nameTextCell!.text = onePerson.firstName + " " + onePerson.lastName
         cell?.emailCell!.text = onePerson.email
+        cell?.prsID = onePerson.prsID
         cell?.phoneNumberCell!.text = onePerson.phoneNumber
         cell?.skillLevelCell!.text = onePerson.skillLevel
         cell?.sportTypeCell!.text = onePerson.sportType

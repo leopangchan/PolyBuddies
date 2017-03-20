@@ -10,7 +10,7 @@ import Foundation
 
 class Availibility
 {
-    private var _startDateAndTime: NSData?
+    private var _start: NSData?
     private var _endTime: NSData?
 
     

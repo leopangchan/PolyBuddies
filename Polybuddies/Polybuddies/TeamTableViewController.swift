@@ -15,7 +15,6 @@ class TeamTableCell: UITableViewCell
     var team: Team?
 
     @IBOutlet weak var teamNameView: UITextView!
-    @IBOutlet weak var teammemberView: UITextView!
     @IBOutlet weak var phoneNumberView: UITextView!
     @IBOutlet weak var skillLevelView: UITextView!
     @IBOutlet weak var sportTypeView: UITextView!
@@ -26,13 +25,11 @@ class TeamTableCell: UITableViewCell
         let textViewBackgroundColor = UIColor(white: 1, alpha: 0.3)
         self.layer.backgroundColor = UIColor.clear.cgColor
         teamNameView?.backgroundColor = textViewBackgroundColor
-        teammemberView?.backgroundColor = textViewBackgroundColor
         phoneNumberView?.backgroundColor = textViewBackgroundColor
         skillLevelView?.backgroundColor = textViewBackgroundColor
         sportTypeView?.backgroundColor = textViewBackgroundColor
         
         teamNameView?.isEditable = false
-        teammemberView?.isEditable = false
         phoneNumberView?.isEditable = false
         skillLevelView?.isEditable = false
         sportTypeView?.isEditable = false
@@ -87,23 +84,24 @@ class TeamTableViewController: UITableViewController
     
     @objc private func wrapperCB ()
     {
-        print ("teams:  ", allTeams)
         self.tableView.reloadData()
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         
+        self.allTeams = []
         ref?.child("Teams").observe(.childAdded, with: { (snapshot) in
             let valueS = snapshot.value as? NSDictionary
+            print ("PRINT ONE TEAM ", valueS)
             self.allTeams.append(Team(name: self.wrap!.strWrapper(field: "Name", valueS: valueS),
                                       skillLevel: self.wrap!.strWrapper(field: "Skill Level", valueS: valueS),
                                       sportType: self.wrap!.strWrapper(field: "Sport Type", valueS: valueS),
                                       longtitude: self.wrap!.doubleWrapper(field: "longtitude", valueS: valueS),
                                       latitude: self.wrap!.doubleWrapper(field: "latitude", valueS: valueS),
-                                      teammembers: self.wrap!.teamWrapper(ref: self.ref!, valueS: valueS),
-                                      availabilities: [Availibility(date: self.wrap!.strWrapper(field: "AvailableDates", valueS: valueS),
-                                                                    startTime: self.wrap!.strWrapper(field: "StartTime", valueS: valueS),
-                                                                    endTime: self.wrap!.strWrapper(field: "EndTime", valueS: valueS))],
+                                      teammembers: self.wrap!.teamWrapper(valueS: valueS),
+                                      date: self.wrap!.strWrapper(field: "AvailableDates", valueS: valueS),
+                                      startTime: self.wrap!.strWrapper(field: "StartTime", valueS: valueS),
                                       phoneNumber: self.wrap!.strWrapper(field: "Phone Number", valueS: valueS)))
         })
     }
@@ -119,30 +117,38 @@ class TeamTableViewController: UITableViewController
         wrap = Wrappers()
         ref = FIRDatabase.database().reference()
         
-        let bgImage = UIImage(named: "SoccerFieldImage");
-        let imageView = UIImageView(frame: self.view.bounds);
-        imageView.image = bgImage
-        self.view.addSubview(imageView)
-        self.view.sendSubview(toBack: imageView)
+        //let bgImage = UIImage(named: "SoccerFieldImage");
+        //let imageView = UIImageView(frame: self.view.bounds);
+        //imageView.image = bgImage
+        //self.view.addSubview(imageView)
+        //self.view.sendSubview(toBack: imageView)
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "SoccerFieldImage")
+        self.view.insertSubview(backgroundImage, at: 0)
+        
+        //solution: but too dark self.tableView.backgroundColor = UIColor(patternImage: bgImage!)
 
         DispatchQueue.main.asyncAfter(
             deadline: .now() + 1,
             execute: {self.wrapperCB()})
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int
+    {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
         // #warning Incomplete implementation, return the number of rows
         return allTeams.count
     }
@@ -152,12 +158,11 @@ class TeamTableViewController: UITableViewController
         performSegue(withIdentifier: "ListingToAddUser", sender: self)
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamTableCell
         let oneTeam = self.allTeams[indexPath.row]
-        //action: #selector(TableViewController.buttonTapped(_:))
 
-        cell.addPersonBtn.addTarget(self, action: #selector(TeamTableViewController.performSegueSelector), for: .touchUpInside)
         cell.contentView.layer.opacity = 1.8;
         cell.teamNameView?.text = oneTeam.name
         cell.skillLevelView?.text = oneTeam.sportType
@@ -165,15 +170,16 @@ class TeamTableViewController: UITableViewController
         cell.sportTypeView?.text = oneTeam.sportType
         cell.skillLevelView?.text = oneTeam.skillLevel
         cell.initViewStyle();
+        print ("oneTeam  ", oneTeam.teammembers)
         cell.team = oneTeam
 
         return cell
     }
     
     // Resize height to fit the customized cells
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-
-        return CGFloat(200.0)
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return CGFloat(155.0)
     }
 
     /*
@@ -214,16 +220,17 @@ class TeamTableViewController: UITableViewController
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "ListingToAddUser"
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "ToTeamDetail"
         {
-            if segue.destination is AddUserViewController
+            if let dest = segue.destination as? TeamDetailViewController
             {
-                if (sender as? TeamTableCell) != nil
+                                    print ("SEGUE team ")
+                if let sndr = sender as? TeamTableCell
                 {
-                    print("In TeamTable")
+                    dest.team = sndr.team
+                    print ("SEGUE team ", sndr.team)
                 }
             }
         }

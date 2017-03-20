@@ -71,6 +71,25 @@ class User
         }
     }
     
+    private var _prsID: String?
+    public var prsID: String{
+        get{
+            if let _prsID = _prsID
+            {
+                return _prsID
+            }
+            else
+            {
+                return "No teammembers"  
+            }
+
+        }
+        set{
+            _prsID = newValue
+        }
+    
+    }
+    
     init(firstName: String, lastName: String, phoneNumber: String, sportType: String, skillLevel: String, email: String)
     {
         _firstName = firstName

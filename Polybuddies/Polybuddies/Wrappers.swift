@@ -11,13 +11,14 @@ import Firebase
 
 class Wrappers {
     
+    var timer = Timer()
+    
     public func strWrapper(field : String, valueS : NSDictionary?) -> String
     {
         var strR: String
         
         if let valueS = valueS
         {
-            print("unwarpping ", valueS )
             if let val = valueS[field]
             {
                 strR = val as! String
@@ -34,59 +35,44 @@ class Wrappers {
         
         return strR
     }
-    
 
-    private func fetchMemmbersInATeam(ref: FIRDatabaseReference, userIds: NSDictionary) -> [User]
+    public func teamWrapper(valueS : NSDictionary?) -> [String]
     {
-        var users: [User] = []
-        
-        ref.child("Users").observe(.childAdded, with: { (snapshot) in
-            let valueS = snapshot.value as? NSDictionary
-            let userId = valueS?["userId"] as! Int
-            
-            for (index, value) in userIds
-            {
-                if(userId == value as! Int)
-                {
-                    let oneUser = User(firstName: self.strWrapper(field: "First Name", valueS: valueS),
-                                       lastName: self.strWrapper(field: "Last Name", valueS: valueS),
-                                       phoneNumber: self.strWrapper(field: "Phone Number", valueS: valueS),
-                                       sportType: self.strWrapper(field: "Sport Type", valueS: valueS),
-                                       skillLevel: self.strWrapper(field: "Skill Level", valueS: valueS),
-                                       email: self.strWrapper(field: "Email", valueS: valueS))
-                    users.append(oneUser)// check if the value from the loop would work here
-                    print ("appending: ", users)
-                }
-            }
-        })
-        
-        return users
-    }
-    
-    
-    public func teamWrapper(ref: FIRDatabaseReference, valueS : NSDictionary?) -> [User]
-    {
-        var nsDR : [User]?
+        var nsDR : [String]?
         
         if let valueS = valueS
         {
             if let val = valueS["Teammember"]
             {
-                nsDR = self.fetchMemmbersInATeam(ref: ref, userIds: valueS["Teammember"] as! NSDictionary)
+                // It will not work the data is missing one index
+                if let val = val as? [String]
+                {
+                    nsDR = val
+                }
+                else
+                {
+                    if let val = val as? [Any]
+                    {
+                        var nsDRTemp : [String] = []
+                        for value in val {
+                            nsDRTemp.append(String(describing: value))
+                        }
+                        nsDR = nsDRTemp
+                    }
+                }
             }
             else
             {
-                nsDR = [User(firstName: "N/A", lastName: "N/A", phoneNumber: "N/A", sportType: "N/A", skillLevel: "N/A", email: "N/A")]
+                nsDR = []
             }
         }
         else
         {
-            nsDR = [User(firstName: "DB Error", lastName: "N/A", phoneNumber: "N/A", sportType: "N/A", skillLevel: "N/A", email: "N/A")]
+            nsDR = []
         }
         
         return nsDR!
     }
-    
     
     public func doubleWrapper(field : String, valueS : NSDictionary?) -> Double
     {

@@ -19,6 +19,34 @@ class PostTeamViewController: UIViewController {
     @IBOutlet weak var postPhoneNumber: UITextField!
     @IBOutlet weak var postDate: UIDatePicker!
     
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var sportTypeLabel: UILabel!
+    @IBOutlet weak var phoneNoLabel: UILabel!
+    @IBOutlet weak var levelLabel: UILabel!
+    
+    private func initTextAndLabelView()
+    {
+        let textViewBackgroundColor = UIColor(white: 1, alpha: 0.3)
+        let borderColor = UIColor.darkGray.cgColor;
+        
+        postName?.backgroundColor = textViewBackgroundColor
+        postLevel?.backgroundColor = textViewBackgroundColor
+        postSportType?.backgroundColor = textViewBackgroundColor
+        postPhoneNumber?.backgroundColor = textViewBackgroundColor
+
+        nameLabel.layer.borderColor = borderColor
+        nameLabel.layer.borderWidth = 1.0
+        
+        sportTypeLabel.layer.borderColor = borderColor
+        sportTypeLabel.layer.borderWidth = 1.0
+        
+        levelLabel.layer.borderColor = borderColor
+        levelLabel.layer.borderWidth = 1.0
+        
+        phoneNoLabel.layer.borderColor = borderColor
+        phoneNoLabel.layer.borderWidth = 1.0
+    }
+    
     @IBAction func post(_ sender: Any)
     {
         let checkFields = postName!.text! == "" || postLevel!.text! == "" ||
@@ -38,18 +66,13 @@ class PostTeamViewController: UIViewController {
         super.viewDidLoad()
         let bgImage = UIImage(named: "SoccerFieldImage");
         let imageView = UIImageView(frame: self.view.bounds);
-        let textViewBackgroundColor = UIColor(white: 1, alpha: 0.3)
-        
+
         self.view.addSubview(imageView)
         self.view.sendSubview(toBack: imageView)
-
+        self.initTextAndLabelView()
         alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         imageView.image = bgImage
-        
-        postName?.backgroundColor = textViewBackgroundColor
-        postLevel?.backgroundColor = textViewBackgroundColor
-        postSportType?.backgroundColor = textViewBackgroundColor
-        postPhoneNumber?.backgroundColor = textViewBackgroundColor
+
     }
 
     override func didReceiveMemoryWarning()
@@ -69,8 +92,8 @@ class PostTeamViewController: UIViewController {
         {
             if let dest = segue.destination as? AddUserViewController
             {
-                print("sender: ", sender)
-                if let sndr = sender as? UIButton
+                print("sender: ", sender!)
+                if let _ = sender as? UIButton
                 {
                     dest.name = postName?.text
                     dest.level = postLevel?.text
@@ -78,7 +101,7 @@ class PostTeamViewController: UIViewController {
                     dest.phoneNumber = postPhoneNumber?.text
                     dest.date = (postDate?.date)!
                     
-                    print("Segue:  ", dest.name)
+                    print("Segue:  ", dest.name!)
                 }
             }
         }

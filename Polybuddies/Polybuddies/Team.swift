@@ -83,8 +83,8 @@ class Team
         }
     }
     
-    private var _teammembers: [User]?
-    var teammembers: [User]{
+    private var _teammembers: [String]?
+    var teammembers: [String]{
         get{
             return _teammembers!
         }
@@ -92,14 +92,24 @@ class Team
             _teammembers = newValue
         }
     }
-    
-    private var _availabilities: [Availibility]?// {startDate, endDate, startTime, endTime}
-    var availabilities: [Availibility]{
+
+    private var _startTime: String?
+    var startTime: String{
         get{
-            return _availabilities!
+            return _startTime!
         }
         set{
-            _availabilities = newValue
+            _startTime = newValue
+        }
+    }
+    
+    private var _date: String?
+    var date: String{
+        get{
+            return _date!
+        }
+        set{
+            _date = newValue
         }
     }
     
@@ -114,7 +124,7 @@ class Team
     }
     
     init(name: String, skillLevel: String, sportType: String, longtitude: Double, latitude: Double,
-        teammembers: [User], availabilities:[Availibility], phoneNumber: String)
+         teammembers: [String], date: String, startTime: String, phoneNumber: String)
     {
         _name = name
         _skillLevel = skillLevel
@@ -122,7 +132,8 @@ class Team
         _longtitude = longtitude
         _latitude = latitude
         _teammembers = teammembers
-        _availabilities = availabilities
+        _date = date
+        _startTime = startTime
         _phoneNumber = phoneNumber
     }
 
