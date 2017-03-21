@@ -6,7 +6,7 @@ PolyBuddies
 PolyBuddies is a platform where students can form sport teams and find their sport
 buddies at Cal Poly.
 
-#Overview:
+# Overview:
 Most of the time, students cannot find buddies to work out or not have enough players to
 form a basketball or volleyball team to play a game. PolyBuddies can solve this issue. Unlike
 other Sport Buddy applications in the market, PolyBuddies strongly focuses on forming teams
