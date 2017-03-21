@@ -31,6 +31,7 @@ class MapViewController: UIViewController
     private var ref: FIRDatabaseReference?
     private var allTeams: [smallTeam] = []
     
+    // Since not all properties of a team are displayed in a pin, I created a struct to store all necessary data.
     private struct smallTeam
     {
         let name: String
@@ -53,6 +54,7 @@ class MapViewController: UIViewController
                                            location: self.wrap!.strWrapper(field: "Location", valueS: valueS)))})
     }
     
+    // Get the latitude and longtitude of a location
     private func getLocationCoordinate(locationString: String) -> CLLocationCoordinate2D
     {
         if(locationString == "Rec Center")
@@ -93,12 +95,11 @@ class MapViewController: UIViewController
             var subtitle: String = "TBA"
             if (value.location != "Other" && value.location != "N/A")
             {
-                subtitle = value.sportType + "\n    Date: " + value.date + "    Start Time: " + value.startTime
+                subtitle = value.sportType + "    Date: " + value.date + "    Start Time: " + value.startTime
                 let pinOne = PinAnnotation(title: value.name , subtitle: subtitle,
                                            coordinate: getLocationCoordinate(locationString: value.location))
                 map.addAnnotation(pinOne)
             }
-
         }
     }
     

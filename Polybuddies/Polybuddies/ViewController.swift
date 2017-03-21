@@ -29,9 +29,10 @@ class ViewController: UIViewController
     override func viewDidAppear(_ animated: Bool)
     {
         let nav = self.navigationController?.navigationBar
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        
         nav?.barStyle = UIBarStyle.black
         nav?.tintColor = UIColor.yellow
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.contentMode = .scaleAspectFit
         navigationItem.titleView = imageView
     }

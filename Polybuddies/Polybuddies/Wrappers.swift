@@ -9,10 +9,9 @@
 import Foundation
 import Firebase
 
-class Wrappers {
-    
-    var timer = Timer()
-    
+class Wrappers
+{
+    // If a field in DB is nil, return N/A
     public func strWrapper(field : String, valueS : NSDictionary?) -> String
     {
         var strR: String
@@ -36,6 +35,7 @@ class Wrappers {
         return strR
     }
 
+    // If no teammembers in a team, return []
     public func teamWrapper(valueS : NSDictionary?) -> [String]
     {
         var nsDR : [String]?
@@ -74,6 +74,7 @@ class Wrappers {
         return nsDR!
     }
     
+    // Set up default double value if the data isn't present in the DB
     public func doubleWrapper(field : String, valueS : NSDictionary?) -> Double
     {
         var doubleR: Double

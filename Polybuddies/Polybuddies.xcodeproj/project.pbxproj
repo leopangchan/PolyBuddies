@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1B546B37DD9EAB038B06BF6C /* Pods_PolybuddiesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3892257BDA9E71F4B81B97 /* Pods_PolybuddiesUITests.framework */; };
-		1C472EDB1E77666C0043C5F3 /* Availibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C472EDA1E77666C0043C5F3 /* Availibility.swift */; };
 		1C472EDD1E77AE030043C5F3 /* Wrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C472EDC1E77AE030043C5F3 /* Wrappers.swift */; };
 		1C5392851E7E86F900C52ED3 /* TeamDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5392841E7E86F900C52ED3 /* TeamDetailViewController.swift */; };
 		1C76B4EE1E7A85AE00535C83 /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76B4ED1E7A85AE00535C83 /* AddUserViewController.swift */; };
@@ -47,7 +46,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1C472EDA1E77666C0043C5F3 /* Availibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Availibility.swift; sourceTree = "<group>"; };
 		1C472EDC1E77AE030043C5F3 /* Wrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wrappers.swift; sourceTree = "<group>"; };
 		1C5392841E7E86F900C52ED3 /* TeamDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamDetailViewController.swift; sourceTree = "<group>"; };
 		1C76B4ED1E7A85AE00535C83 /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 				1CCDA38F1E5D5484001443E4 /* Assets.xcassets */,
 				1CF2DC301E5F82FB002B43E6 /* Team.swift */,
 				1CFCA64A1E6E962B002FE471 /* User.swift */,
-				1C472EDA1E77666C0043C5F3 /* Availibility.swift */,
 				1C472EDC1E77AE030043C5F3 /* Wrappers.swift */,
 				1CCDA3941E5D5484001443E4 /* Info.plist */,
 				1CCDA3B61E5D567F001443E4 /* GoogleService-Info.plist */,
@@ -462,7 +459,6 @@
 				1C76B4EE1E7A85AE00535C83 /* AddUserViewController.swift in Sources */,
 				1CF2DC311E5F82FB002B43E6 /* Team.swift in Sources */,
 				1C472EDD1E77AE030043C5F3 /* Wrappers.swift in Sources */,
-				1C472EDB1E77666C0043C5F3 /* Availibility.swift in Sources */,
 				1CAD080D1E5E3A1500E6E429 /* TeamTableViewController.swift in Sources */,
 				1CCDA3B91E5D5D87001443E4 /* PostTeamViewController.swift in Sources */,
 				1C5392851E7E86F900C52ED3 /* TeamDetailViewController.swift in Sources */,

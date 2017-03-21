@@ -54,6 +54,7 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     private let dateFormatter = DateFormatter()
 
+    // UI Components:
     @IBOutlet weak var pplTableView: UITableView!
     @IBOutlet weak var skillLevelField: UITextField!
     @IBOutlet weak var sportTypeField: UITextField!
@@ -62,8 +63,11 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var lastNameField: UITextField!
     @IBOutlet weak var firstNameField: UITextField!
     
+    // Set up Alerts for empty fields
     private var alert : UIAlertController = UIAlertController(title: "Yo!", message: "Please enter your first name and email.", preferredStyle: UIAlertControllerStyle.alert)
     private var dupAlert : UIAlertController = UIAlertController(title: "Yo!", message: "This person is already in the team", preferredStyle: UIAlertControllerStyle.alert)
+    
+    // They are initialized by the data from DB
     public var ppl : [User] = []// The ppl being displayed in the TableView
     public var aPerson : User?
         {
@@ -72,7 +76,6 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let aPerson = aPerson
             {
                 ppl.append(aPerson)
-                print("appending: ", ppl)
             }
         }
     }
@@ -84,6 +87,8 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             let pn = name!
             if pn != ""
             {
+                // if the date is not formatted in the previous viewController that triggered a segue, 
+                //    formate the date here.
                 if onlyDate == "" && onlyStartTime == ""
                 {
                     let formattedDateArray = dateFormatter.string(from: date!).components(separatedBy: " ")
@@ -111,30 +116,6 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         {
             print ("Error fetching data from DB")
         }
-    }
-
-    @IBAction func didTouchDownFirstNameEditing(_ sender: Any)
-    {
-        firstNameField.layer.borderColor = UIColor.gray.cgColor
-        firstNameField.layer.borderWidth = 1
-        firstNameField.layer.cornerRadius = 5
-    }
-    
-    @IBAction func didEndFirstNameEditing(_ sender: Any)
-    {
-        firstNameField.layer.borderWidth = 0
-    }
-    
-    @IBAction func didTouchDownLastName(_ sender: Any)
-    {
-        firstNameField.layer.borderColor = UIColor.gray.cgColor
-        firstNameField.layer.borderWidth = 1
-        firstNameField.layer.cornerRadius = 5
-    }
-    
-    @IBAction func didEndEditingLastName(_ sender: Any)
-    {
-        firstNameField.layer.borderWidth = 0
     }
     
     // Add a Person to the tableView
@@ -201,7 +182,8 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         return false
     }
     
-    private func initTextFields ()
+    // initialize styles of all text fields
+    private func initTextFields()
     {
         let textViewBackgroundColor = UIColor(white: 1, alpha: 0.3)
         
@@ -234,11 +216,13 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         userRef = FIRDatabase.database().reference(withPath: "Users")
     }
     
+    // Set the table editable
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         pplTableView.setEditing(editing, animated: animated)
     }
     
+    // Detext the editing mode
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete
         {

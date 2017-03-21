@@ -167,6 +167,8 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         teammemberTableView.setEditing(editing, animated: animated)
     }
     
+    // Since teammebers are stored in an array in DB, if the indexes were 0 1 2, indexPath.row won't work.
+    // This a function is to find the correct index for the person in question in the DB by comparing his prsID
     private func getPrsKey(teammembers : [String], deleting: String) -> String
     {
         for(index, val) in teammembers.enumerated()
@@ -185,8 +187,8 @@ class TeamDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         if editingStyle == .delete
         {
             let deletingID = ppl[indexPath.row].prsID
-            
             let key = getPrsKey(teammembers: (team?.teammembers)!, deleting: String(deletingID))
+            
             ref?.child("Teams").child((team?.name)!).child("Teammember").child(key).removeValue()
             ppl.remove(at: indexPath.row)
             //teammemberTableView.deleteRows(at: [indexPath], with: .fade)

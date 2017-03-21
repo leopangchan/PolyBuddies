@@ -12,18 +12,20 @@ import UIKit
 class PostTeamViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate
 {
     
-    private let alert = UIAlertController(title: "Yo!", message: "Please enter your all the fields.", preferredStyle: UIAlertControllerStyle.alert)
-    private let locationArray = ["Rec Center", "Soccer Field", "Bagger Stadium", "Bob Janssen Field", "Dexter Lawn", "The P", "Other"]
+    private let alert = UIAlertController(title: "Yo!", message: "Please enter your all the fields.",
+                                          preferredStyle: UIAlertControllerStyle.alert)
+    // An array for PickerView for gyms or fields in Cal Poly
+    private let locationArray = ["Rec Center", "Soccer Field", "Bagger Stadium", "Bob Janssen Field",
+                                 "Dexter Lawn", "The P", "Other"]
     private var selectedLocation: String = "N/A"
 
+    // UI Components
     @IBOutlet weak var postName: UITextField!
     @IBOutlet weak var postLevel: UITextField!
     @IBOutlet weak var postSportType: UITextField!
     @IBOutlet weak var postPhoneNumber: UITextField!
     @IBOutlet weak var postDate: UIDatePicker!
-    
     @IBOutlet weak var locationPickerView: UIPickerView!
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var sportTypeLabel: UILabel!
     @IBOutlet weak var phoneNoLabel: UILabel!
@@ -95,7 +97,6 @@ class PostTeamViewController: UIViewController, UIPickerViewDataSource,UIPickerV
         super.didReceiveMemoryWarning()
     }
     
-    
     // MARK: - PickerView
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
@@ -118,7 +119,6 @@ class PostTeamViewController: UIViewController, UIPickerViewDataSource,UIPickerV
     }
     
     // MARK: - Navigation
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         // Get the new view controller using segue.destinationViewController.
