@@ -2,14 +2,14 @@
 //  PostTeamViewController.swift
 //  Polybuddies
 //
-//  Created by CheckoutUser on 2/21/17.
+//  Created by Yiupang on 2/21/17.
 //  Copyright © 2017 Yiupang Chan. All rights reserved.
 //
 
 import UIKit
 
 
-class PostTeamViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate
+class PostTeamViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate, UITextFieldDelegate
 {
     
     private let alert = UIAlertController(title: "Yo!", message: "Please enter your all the fields.",
@@ -88,6 +88,7 @@ class PostTeamViewController: UIViewController, UIPickerViewDataSource,UIPickerV
         alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         imageView.image = bgImage
         
+        postPhoneNumber.delegate = self
         locationPickerView.delegate = self
         locationPickerView.dataSource = self
     }
@@ -97,6 +98,11 @@ class PostTeamViewController: UIViewController, UIPickerViewDataSource,UIPickerV
         super.didReceiveMemoryWarning()
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+
+        return true
+    }
     // MARK: - PickerView
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {

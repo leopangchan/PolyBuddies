@@ -36,7 +36,7 @@ class PersonCell: UITableViewCell
     }
 }
 
-class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
+class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
 {
     private var ref: FIRDatabaseReference?
     private var userRef: FIRDatabaseReference?
@@ -152,6 +152,13 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
     // A helper that post a Person to Users in DB
     private func addPrsToDB(usr : User)
     {
@@ -210,7 +217,7 @@ class AddUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss +ZZZZZ"
         alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-        
+        skillLevelField.delegate = self
         self.initTextFields()
         ref = FIRDatabase.database().reference(withPath: "Teams")
         userRef = FIRDatabase.database().reference(withPath: "Users")

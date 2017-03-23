@@ -2,7 +2,7 @@
 //  TeamTableViewController.swift
 //  Polybuddies
 //
-//  Created by CheckoutUser on 2/22/17.
+//  Created by Yiupang on 2/22/17.
 //  Copyright © 2017 Yiupang Chan. All rights reserved.
 //
 
